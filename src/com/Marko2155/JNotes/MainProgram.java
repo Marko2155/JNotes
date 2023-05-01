@@ -18,7 +18,7 @@ class MainProgram {
 		JMenuItem open = new JMenuItem("Open");
 		JMenuItem save = new JMenuItem("Save (currently does not work)");
 		JMenuItem exit = new JMenuItem("Exit");
-		JTextArea field = new  JTextArea();
+		JEditorPane field = new  JEditorPane();
 		JFileChooser filechooser = new JFileChooser();
 		filechooser.setSelectedFile(new File(System.getProperty("user.home")));
 		
@@ -28,8 +28,9 @@ class MainProgram {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method 
-				JTextArea tabTextField = new JTextArea();
-				tabs.addTab("Tab", tabTextField);
+				JEditorPane tabTextField = new JEditorPane();
+				JScrollPane tabScroller = new JScrollPane(tabTextField);
+				tabs.addTab("Tab", tabScroller);
 			}
 			
 		});
@@ -53,15 +54,14 @@ class MainProgram {
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = filechooser.getSelectedFile();
 					BufferedReader in;
-					
-					
 					try {
-						JTextArea importedtabTextField = new JTextArea();
-						tabs.addTab("ImportedTab", importedtabTextField);
+						JEditorPane importedtabTextField = new JEditorPane();
+						JScrollPane importedtabScroller = new JScrollPane(importedtabTextField);
+						tabs.addTab("ImportedTab", importedtabScroller);
 						in = new BufferedReader(new FileReader(selectedFile));
 						String line = in.readLine();
 						while(line != null) {
-							importedtabTextField.append(line + "\n");
+							importedtabTextField.setText(line + "\n");
 							line = in.readLine();
 						}
 					} catch (FileNotFoundException e1) {
@@ -90,7 +90,7 @@ class MainProgram {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				JOptionPane.showMessageDialog(frame, "Made by Marko2155\nFor people that frequently make notes.\nBuild 1.0", "About", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(frame, "Made by Marko2155\nFor people that frequently make notes.\nBuild 1523", "About", JOptionPane.INFORMATION_MESSAGE);
 			}
 			
 		});
@@ -112,5 +112,6 @@ class MainProgram {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		frame.setTitle("JNotes");
+		frame.setIconImage(null);
 	}
 }
