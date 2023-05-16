@@ -2,6 +2,8 @@ package com.Marko2155.JNotes;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.*;
 import javax.swing.*;
 
@@ -19,9 +21,10 @@ class MainProgram {
 		JMenuItem save = new JMenuItem("Save (currently does not work)");
 		JMenuItem exit = new JMenuItem("Exit");
 		JEditorPane field = new  JEditorPane();
+		JPopupMenu deletemenu = new JPopupMenu();
+		JMenuItem deletebutton = new JMenuItem("Delete");
 		JFileChooser filechooser = new JFileChooser();
 		filechooser.setSelectedFile(new File(System.getProperty("user.home")));
-		
 		//Add component settings here
 		button.addActionListener(new ActionListener() {
 
@@ -31,9 +34,53 @@ class MainProgram {
 				JEditorPane tabTextField = new JEditorPane();
 				JScrollPane tabScroller = new JScrollPane(tabTextField);
 				tabs.addTab("Tab", tabScroller);
+				tabs.addMouseListener(new MouseListener() {
+
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// TODO Auto-generated method stub
+						int index = tabs.getSelectedIndex();
+						deletemenu.add(deletebutton);
+						deletemenu.show(frame, e.getX(), e.getY());
+						deletebutton.addActionListener(new ActionListener() {
+
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								// TODO Auto-generated method stub
+								tabs.remove(index);
+							}
+							
+						});
+					}
+
+					@Override
+					public void mousePressed(MouseEvent e) {
+						// TODO Auto-generated method stub
+					}
+
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseExited(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+				});
 			}
 			
 		});
+		
 		exit.addActionListener(new ActionListener() {
 
 			@Override
@@ -90,7 +137,7 @@ class MainProgram {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				JOptionPane.showMessageDialog(frame, "Made by Marko2155\nFor people that frequently make notes.\nBuild 1523", "About", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(frame, "Made by Marko2155\nFor people that frequently make notes.", "About", JOptionPane.INFORMATION_MESSAGE);
 			}
 			
 		});
@@ -102,6 +149,7 @@ class MainProgram {
 		menu1.add(save);
 		menu1.add(exit);
 		lastmenu.add(about);
+		deletemenu.add(deletebutton);
 		//Add manual tabs here
 		tabs.addTab("+", button);
 		//Add components here
